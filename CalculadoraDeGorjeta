@@ -1,0 +1,221 @@
+import React ,{useState,useEffect} from "react";
+import { View,Text,StyleSheet,TouchableOpacity, Button } from "react-native";
+import styled from "styled-components/native";
+
+
+
+const styles = StyleSheet.create({
+texto:{
+color: "blue",
+fontSize:30
+},
+textobotao:{
+
+  textAlign:'center',
+  fontSize:30,
+  color:"white",
+  
+  
+},textob2:{
+  padding:10,
+  color:"white",
+  textAlign:"center",
+  fontSize:15
+}
+
+
+});
+
+const Page = styled.View`
+
+flex:1;
+
+alignItems:center;
+`;
+
+const Botao = styled.TouchableOpacity`
+marginTop:50px;
+backgroundColor:blue;
+width:90%;
+height:40px;
+borderRadius:20px;
+`;
+
+const Input = styled.TextInput`
+
+width:90%;
+height:40px;
+font-size:18px;
+background-color:#EEE;
+margin-top:20px;
+border-radius:50px;
+padding:10px;
+color:green;
+`;
+
+const Resultado = styled.View `
+margin-top:30px;
+background-color:#EEE;
+padding:20px;
+justify-content:center;
+align-items:center;
+width:90%;
+
+`;
+const TitulodoResultado = styled.Text`
+font-size:18px;
+font-weight:bold;
+`;
+const ItemResultado = styled.Text`
+font-size:15px;
+margin-bottom:30px;
+
+
+`;
+
+const PctArea = styled.View`
+flex-direction:row;
+margin:10px;
+width:70px;
+height:50px;
+justify-content:center;
+
+`;
+
+const PctItem = styled.TouchableOpacity`
+backgroundColor:blue;
+marginRight:20px;
+
+`;
+
+
+
+
+
+
+export default ()=>{
+
+const [valor, setValor] = useState("");
+const [gorjeta,setGorjeta] = useState(0);
+const [porc,setPorc] = useState(10);
+
+const calc = ()=>{
+
+  let nValor = parseFloat(valor);
+  
+  
+  
+  
+  if(nValor){
+    setGorjeta((porc/100)*nValor);
+  }else{
+    alert("digite o valor da conta");
+  }
+
+}
+
+useEffect(()=>{
+  calc()
+},[porc]);
+
+return(
+<Page>
+<Text style={styles.texto}>Calculadora de Gorjeta</Text>
+<Input
+ placeholder = "valor da conta"
+ placeholderTextColor="#000"
+ keyboardType= "numeric"
+ value ={valor}
+ onChangeText={n=>setValor(n)}
+
+/>
+<PctArea>
+<PctItem  onPress={()=>setPorc(5)}><Text style={styles.textob2}>5%</Text></PctItem>
+<PctItem  onPress={()=>setPorc(10)}><Text style={styles.textob2}>10%</Text></PctItem>
+<PctItem  onPress={()=>setPorc(15)}><Text style={styles.textob2}>15%</Text></PctItem>
+<PctItem  onPress={()=>setPorc(20)}><Text style={styles.textob2}>20%</Text></PctItem>
+
+
+
+</PctArea>
+
+
+<Botao onPress={calc}>
+  <Text style={styles.textobotao}>Calcular {porc}%</Text>
+</Botao>
+
+{ valor > 0 &&
+
+
+<Resultado>
+  <TitulodoResultado>Valor da Conta</TitulodoResultado>
+  <ItemResultado>R$ {parseFloat(valor).toFixed(2)}</ItemResultado>
+
+  <TitulodoResultado> Valor da Gorjeta</TitulodoResultado>
+  <ItemResultado> R$ {gorjeta.toFixed(2)} ({porc}%)</ItemResultado>
+
+
+  <TitulodoResultado> Valor total da Conta:</TitulodoResultado>
+  <ItemResultado>R${(parseFloat(valor) + gorjeta).toFixed(2)}</ItemResultado>
+
+</Resultado>
+}
+
+</Page>
+
+);
+
+
+}
+
+
+
+
+
+
+/*
+const styles = StyleSheet.create({
+  page:{
+    width:200,
+    height:200,
+    backgroundColor:'red'
+  },
+  texto:{
+    color:'green',
+    fontSize:25
+  }
+  
+
+});
+
+
+// uma forma de criar um componente
+/*
+const TextoIncial = () =>{
+  return (
+    <View>
+    <Text> Ola mundo</Text>
+    </View>
+  );
+}
+*/
+/*
+uma forma via função
+function TextoIncial(){
+  return(
+
+    <Text>Texto 2</Text>
+  );
+}
+
+*/
+//atraves de classe importo o 'Component' deixando de ser usado
+/*
+ class TextoIncial extends Component {
+  render() {
+    return(
+      <Text>Texto 3</Text>
+    );
+  }
+ }
+*/
